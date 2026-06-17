@@ -1,0 +1,66 @@
+{
+  "model_version": "v6.0-unified",
+  "weights": {
+    "group_stage": {
+      "odds": 0.5,
+      "elo": 0.2,
+      "xg": 0.15,
+      "form": 0.1,
+      "fifa": 0.05
+    },
+    "knockout": {
+      "elo": 0.4,
+      "odds": 0.3,
+      "xg": 0.15,
+      "form": 0.1,
+      "fifa": 0.05
+    }
+  },
+  "odds_sources": {
+    "titan007": {
+      "weight": 0.5,
+      "companies": "93-187"
+    },
+    "sporttery": {
+      "weight": 0.3,
+      "companies": 1
+    },
+    "bet365": {
+      "weight": 0.2,
+      "companies": 1
+    }
+  },
+  "draw_threshold": 0.35,
+  "mc_iterations": 50000,
+  "backtest_seasons": [
+    "2006",
+    "2010",
+    "2014",
+    "2018",
+    "2022"
+  ],
+  "elo_params": {
+    "k_worldcup": 60,
+    "k_continental": 50,
+    "k_qualifier": 40,
+    "k_friendly": 30,
+    "home_advantage": 65,
+    "neutral_advantage": 0
+  },
+  "environment_correction": {
+    "altitude_threshold_m": 1500,
+    "altitude_bonus_high_alt_countries": 0.08,
+    "altitude_penalty_european": 0.12,
+    "heat_threshold_c": 30,
+    "heat_bonus_adapted": 0.03,
+    "heat_penalty_others": 0.08,
+    "humidity_threshold": 70
+  },
+  "backtest_results": {
+    "v5.8_accuracy": 0.557,
+    "v5.8_log_loss": 0.9736,
+    "v5.8_ev_5pct": 0.0584,
+    "high_confidence_accuracy": 0.706,
+    "high_confidence_threshold": 0.6
+  }
+}

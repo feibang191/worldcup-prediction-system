@@ -1,0 +1,34 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+*.egg-info/
+dist/
+build/
+
+# Database (keep sample_data, ignore local copies)
+*.sqlite-journal
+*.sqlite-wal
+*.sqlite-shm
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Hermes local config
+.hermes/
+config.yaml
+
+# Secrets
+*.env
+*.key
+credentials.json
