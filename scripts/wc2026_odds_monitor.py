@@ -1,165 +1,114 @@
 #!/usr/bin/env python3
-"""
-世界杯2026赔率监控脚本
-- 抓取Sporttery最新赔率
-- 与上次数据对比，检测变化（>5%触发警报）
-- 保存到JSON + SQLite + 历史存档
-- 输出变化报告
+"""World Cup 2026 Odds Monitor."""
 
-用法：python3 wc2026_odds_monitor.py
-"""
-
-import json, os, sqlite3
+import json
+import sys
 from datetime import datetime
 from pathlib import Path
 
-BASE = Path("./数据")
-ODDS_FILE = BASE / "sporttery_official_odds.json"
-ODDS_HISTORY = BASE / "odds_history"
-DB_FILE = BASE / "football_database.sqlite"
-CHANGE_LOG = BASE / "odds_changes.log"
+DATA_DIR = Path("/mnt/e/MyBrain/WIKI/球赛专属/数据")
+DATA_FILE = DATA_DIR / "sporttery_official_odds.json"
+SNAPSHOT_DIR = DATA_DIR / "monitor" / "snapshots"
+THRESHOLD = 0.05
 
-os.makedirs(ODDS_HISTORY, exist_ok=True)
+def load(path):
+    with open(path, "r", encoding="utf-8") as f:
+        return json.load(f)
 
+def save(data, path):
+    with open(path, "w", encoding="utf-8") as f:
+        json.dump(data, f, ensure_ascii=False, indent=2)
 
-def load_previous():
-    if ODDS_FILE.exists():
-        try:
-            data = json.loads(ODDS_FILE.read_text(encoding='utf-8-sig'))
-            if isinstance(data, list):
-                return {m['id']: m for m in data}
-        except:
-            pass
-    return {}
+def latest_snapshot():
+    if not SNAPSHOT_DIR.exists():
+        return None
+    snaps = sorted(SNAPSHOT_DIR.glob("odds_*.json"))
+    if not snaps:
+        return None
+    raw = load(snaps[-1])
+    # Handle wrapper format {'matches': [...], 'fetch_time': ...}
+    if isinstance(raw, dict) and "matches" in raw:
+        return raw["matches"]
+    return raw
 
-
-def save_current(matches):
-    ts = datetime.now().strftime("%Y%m%d_%H%M%S")
-    ODDS_FILE.write_text(json.dumps(matches, ensure_ascii=False, indent=2), encoding='utf-8')
-    history_file = ODDS_HISTORY / f"odds_{ts}.json"
-    history_file.write_text(json.dumps(matches, ensure_ascii=False, indent=2), encoding='utf-8')
-    return ts
-
-
-def detect_changes(old, new, threshold=0.05):
+def compare(curr, prev):
     changes = []
-    for mid, new_m in new.items():
-        if mid in old:
-            old_m = old[mid]
-            for i, key in enumerate(['H', 'D', 'A']):
-                old_val = old_m['spf'][i] if i < len(old_m.get('spf', [])) else None
-                new_val = new_m['spf'][i] if i < len(new_m.get('spf', [])) else None
-                if old_val and new_val and abs(old_val - new_val) > threshold:
-                    changes.append({
-                        'match': f"{new_m['home']} vs {new_m['away']}",
-                        'type': 'SPF', 'option': key,
-                        'old': old_val, 'new': new_val,
-                        'pct': (new_val - old_val) / old_val * 100,
-                    })
-            for i, key in enumerate(['H', 'D', 'A']):
-                old_rq = old_m.get('rq', [])
-                new_rq = new_m.get('rq', [])
-                if i < len(old_rq) and i < len(new_rq) and old_rq[i] and new_rq[i]:
-                    if abs(old_rq[i] - new_rq[i]) > threshold:
-                        changes.append({
-                            'match': f"{new_m['home']} vs {new_m['away']}",
-                            'type': 'RQ', 'option': key,
-                            'old': old_rq[i], 'new': new_rq[i],
-                            'pct': (new_rq[i] - old_rq[i]) / old_rq[i] * 100,
-                        })
-        else:
-            changes.append({
-                'match': f"{new_m['home']} vs {new_m['away']}",
-                'type': 'NEW', 'option': '',
-                'old': 0, 'new': 0, 'pct': 0,
-            })
+    cm = {(m["home"], m["away"]): m for m in curr}
+    pm = {(m["home"], m["away"]): m for m in prev} if prev else {}
+    
+    for key, m in cm.items():
+        if key not in pm:
+            changes.append(("new", m, []))
+            continue
+        mc = []
+        spf_c = m.get("spf") or []
+        spf_p = pm[key].get("spf") or []
+        for i, lab in enumerate(["主胜", "平局", "客胜"]):
+            cv = spf_c[i] if i < len(spf_c) else 0
+            pv = spf_p[i] if i < len(spf_p) else 0
+            if pv and pv > 0:
+                pc = abs(cv - pv) / pv
+                if pc > THRESHOLD:
+                    mc.append(("spf", lab, pv, cv, pc*100, "up" if cv > pv else "down"))
+        rq_c = m.get("rq") or []
+        rq_p = pm[key].get("rq") or []
+        for i, lab in enumerate(["让胜", "让平", "让负"]):
+            cv = rq_c[i] if i < len(rq_c) else 0
+            pv = rq_p[i] if i < len(rq_p) else 0
+            if pv and pv > 0:
+                pc = abs(cv - pv) / pv
+                if pc > THRESHOLD:
+                    mc.append(("rq", lab, pv, cv, pc*100, "up" if cv > pv else "down"))
+        if mc:
+            changes.append(("changed", m, mc))
     return changes
 
-
-def save_to_sqlite(matches, ts):
-    conn = sqlite3.connect(str(DB_FILE))
-    c = conn.cursor()
-    c.execute('''CREATE TABLE IF NOT EXISTS odds_snapshots (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        match_id TEXT, snapshot_time TEXT,
-        home TEXT, away TEXT, match_date TEXT, match_time TEXT,
-        spf_h REAL, spf_d REAL, spf_a REAL,
-        rq_h REAL, rq_d REAL, rq_a REAL,
-        handicap TEXT, status TEXT
-    )''')
-    for m in matches:
-        spf = m.get('spf', [None, None, None])
-        rq = m.get('rq', [None, None, None])
-        c.execute('''INSERT INTO odds_snapshots
-            (match_id, snapshot_time, home, away, match_date, match_time,
-             spf_h, spf_d, spf_a, rq_h, rq_d, rq_a, handicap, status)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)''',
-            (m['id'], ts, m['home'], m['away'], m['date'], m['time'],
-             spf[0] if len(spf) > 0 else None, spf[1] if len(spf) > 1 else None,
-             spf[2] if len(spf) > 2 else None, rq[0] if len(rq) > 0 else None,
-             rq[1] if len(rq) > 1 else None, rq[2] if len(rq) > 2 else None,
-             m.get('handicap', ''), m.get('status', '')))
-    conn.commit()
-    conn.close()
-
-
 def main():
-    print("═" * 60)
-    print(f"  ⚽ 世界杯2026赔率监控 | {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
-    print("═" * 60)
-
-    old = load_previous()
-    print(f"\n  📊 上次数据：{len(old)}场比赛")
-
-    if not ODDS_FILE.exists():
-        print("  ❌ 未找到赔率数据文件")
-        return
-
-    current_data = json.loads(ODDS_FILE.read_text(encoding='utf-8-sig'))
-    if not isinstance(current_data, list):
-        print("  ❌ 数据格式错误")
-        return
-
-    new = {m['id']: m for m in current_data}
-    print(f"  📊 当前数据：{len(new)}场比赛")
-
-    changes = detect_changes(old, new)
-
-    if changes:
-        print(f"\n  🔔 检测到 {len(changes)} 项赔率变化：")
-        print("  " + "─" * 55)
-        for c in changes:
-            if c['type'] == 'NEW':
-                print(f"  🆕 {c['match']} - 新增比赛")
+    print("=" * 60)
+    print("WC2026 Odds Monitor")
+    print(datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
+    print("=" * 60)
+    
+    if not DATA_FILE.exists():
+        print(f"Not found: {DATA_FILE}")
+        sys.exit(1)
+    
+    curr = load(DATA_FILE)
+    print(f"Loaded {len(curr)} matches")
+    
+    prev = latest_snapshot()
+    print(f"Historical baseline: {'found' if prev else 'none'}")
+    
+    ch = compare(curr, prev)
+    
+    if ch:
+        print(f"\nChanges found: {len(ch)} matches\n")
+        for typ, m, details in ch:
+            tid = m.get("id","?")
+            teams = f"{m['home']} vs {m['away']}"
+            if typ == "new":
+                print(f"  NEW: {tid} {teams} ({m['date']} {m['time']})")
+                if m.get("spf"): print(f"     SPF: {m['spf']}")
+                if m.get("rq"): print(f"     RQ: {m['rq']}")
             else:
-                arrow = "↑" if c['pct'] > 0 else "↓"
-                print(f"  {arrow} {c['match']} | {c['type']}-{c['option']} | {c['old']:.2f} → {c['new']:.2f} ({c['pct']:+.1f}%)")
-
-        with open(CHANGE_LOG, 'a', encoding='utf-8') as f:
-            f.write(f"\n{'='*60}\n时间: {datetime.now().isoformat()}\n")
-            for c in changes:
-                if c['type'] != 'NEW':
-                    f.write(f"  {c['match']} | {c['type']}-{c['option']} | {c['old']:.2f} → {c['new']:.2f} ({c['pct']:+.1f}%)\n")
+                print(f"  CHANGED: {tid} {teams} ({m['date']} {m['time']})")
+                for field, lab, pv, cv, pct, dr in details:
+                    arrow = "UP" if dr == "up" else "DOWN"
+                    print(f"     {field.upper()}-{lab}: {pv:.2f}->{cv:.2f} ({arrow}{pct:.1f}%)")
     else:
-        print("\n  ✅ 赔率无变化")
-
-    ts = save_current(current_data)
-    save_to_sqlite(current_data, ts)
-    print(f"\n  💾 已保存到 SQLite + 历史文件 (snapshot: {ts})")
-
-    today = datetime.now().strftime("%Y-%m-%d")
-    upcoming = [m for m in current_data if m['date'] >= today]
-    if upcoming:
-        print(f"\n  📅 即将开赛 ({len(upcoming)}场)：")
-        for m in upcoming[:10]:
-            spf = m.get('spf', [])
-            rq = m.get('rq', [])
-            spf_str = f"SPF:{spf[0]:.2f}/{spf[1]:.2f}/{spf[2]:.2f}" if len(spf) == 3 else "SPF:--"
-            rq_str = f"RQ:{rq[0]:.2f}/{rq[1]:.2f}/{rq[2]:.2f}" if len(rq) == 3 else "RQ:--"
-            print(f"  {m['date']} {m['time']} | {m['home']} vs {m['away']} | {spf_str} | {rq_str}")
-
-    print("\n" + "═" * 60)
-
+        print("\nNo significant changes. Odds stable.")
+    
+    SNAPSHOT_DIR.mkdir(parents=True, exist_ok=True)
+    ts = datetime.now().strftime("%Y%m%d_%H%M%S")
+    sf = SNAPSHOT_DIR / f"odds_{ts}.json"
+    save(curr, sf)
+    print(f"\nSnapshot saved: {sf}")
+    
+    nc = sum(1 for t,_,_ in ch if t=="changed")
+    nn = sum(1 for t,_,_ in ch if t=="new")
+    tc = sum(len(d) for _,_,d in ch if _=="changed")
+    print(f"Summary: {nc} changed, {nn} new, {tc} individual changes")
+    print("=" * 60)
 
 if __name__ == "__main__":
     main()
