@@ -1,0 +1,29 @@
+{
+  "model_version": "v4.0-hybrid",
+  "description": "Elo direction + Dixon-Coles draw probability + GBM draw detection",
+  "components": {
+    "direction": "Elo-based (V3.0 approach)",
+    "draw_probability": "Blend of calibrated draw (40%) + Dixon-Coles (40%) + GBM (20%)",
+    "dixon_coles": {
+      "league_avg_goals": 2.9393595689952,
+      "home_advantage": 1.1,
+      "rho": -0.08491108088497568,
+      "n_teams": 336,
+      "n_matches": 49373
+    },
+    "dual_elo": "Slow (70%) + Fast (30%) momentum",
+    "squad_value": "Squad size + avg age proxy for market value",
+    "penalty_model": "Bayesian shrinkage (0.7 prior + 0.3 likelihood)"
+  },
+  "backtest_results": {
+    "accuracy": 0.7222222222222222,
+    "brier": 0.47417598777777775,
+    "log_loss": 0.7931137532466956,
+    "rps": 0.6449203703703704,
+    "matches": 54,
+    "correct": 39,
+    "pred_h": 39,
+    "pred_d": 0,
+    "pred_a": 15
+  }
+}

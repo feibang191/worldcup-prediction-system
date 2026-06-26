@@ -1,0 +1,542 @@
+[
+  {
+    "match": "Mexico vs South Africa",
+    "actual": "H",
+    "score": "2-0",
+    "pred": "H",
+    "p_h": 0.587,
+    "p_d": 0.2656,
+    "p_a": 0.1474,
+    "correct": true
+  },
+  {
+    "match": "South Korea vs Czechia",
+    "actual": "H",
+    "score": "2-1",
+    "pred": "H",
+    "p_h": 0.575,
+    "p_d": 0.2533,
+    "p_a": 0.1717,
+    "correct": true
+  },
+  {
+    "match": "Canada vs Bosnia-Herzegovina",
+    "actual": "D",
+    "score": "1-1",
+    "pred": "H",
+    "p_h": 0.4441,
+    "p_d": 0.2757,
+    "p_a": 0.2802,
+    "correct": false
+  },
+  {
+    "match": "United States vs Paraguay",
+    "actual": "H",
+    "score": "4-1",
+    "pred": "H",
+    "p_h": 0.4958,
+    "p_d": 0.2696,
+    "p_a": 0.2346,
+    "correct": true
+  },
+  {
+    "match": "Qatar vs Switzerland",
+    "actual": "D",
+    "score": "1-1",
+    "pred": "A",
+    "p_h": 0.1453,
+    "p_d": 0.2763,
+    "p_a": 0.5784,
+    "correct": false
+  },
+  {
+    "match": "Brazil vs Morocco",
+    "actual": "D",
+    "score": "1-1",
+    "pred": "H",
+    "p_h": 0.5619,
+    "p_d": 0.2583,
+    "p_a": 0.1797,
+    "correct": false
+  },
+  {
+    "match": "Haiti vs Scotland",
+    "actual": "A",
+    "score": "0-1",
+    "pred": "A",
+    "p_h": 0.1868,
+    "p_d": 0.2869,
+    "p_a": 0.5263,
+    "correct": true
+  },
+  {
+    "match": "Australia vs Türkiye",
+    "actual": "H",
+    "score": "2-0",
+    "pred": "H",
+    "p_h": 0.5461,
+    "p_d": 0.2486,
+    "p_a": 0.2053,
+    "correct": true
+  },
+  {
+    "match": "Germany vs Curaçao",
+    "actual": "H",
+    "score": "7-1",
+    "pred": "H",
+    "p_h": 0.7043,
+    "p_d": 0.2329,
+    "p_a": 0.0628,
+    "correct": true
+  },
+  {
+    "match": "Netherlands vs Japan",
+    "actual": "D",
+    "score": "2-2",
+    "pred": "H",
+    "p_h": 0.5472,
+    "p_d": 0.2471,
+    "p_a": 0.2057,
+    "correct": false
+  },
+  {
+    "match": "Ivory Coast vs Ecuador",
+    "actual": "H",
+    "score": "1-0",
+    "pred": "A",
+    "p_h": 0.3309,
+    "p_d": 0.2758,
+    "p_a": 0.3933,
+    "correct": false
+  },
+  {
+    "match": "Sweden vs Tunisia",
+    "actual": "H",
+    "score": "5-1",
+    "pred": "H",
+    "p_h": 0.4554,
+    "p_d": 0.2885,
+    "p_a": 0.2561,
+    "correct": true
+  },
+  {
+    "match": "Spain vs Cape Verde",
+    "actual": "D",
+    "score": "0-0",
+    "pred": "H",
+    "p_h": 0.7411,
+    "p_d": 0.2246,
+    "p_a": 0.0343,
+    "correct": false
+  },
+  {
+    "match": "Belgium vs Egypt",
+    "actual": "D",
+    "score": "1-1",
+    "pred": "H",
+    "p_h": 0.6195,
+    "p_d": 0.2458,
+    "p_a": 0.1347,
+    "correct": false
+  },
+  {
+    "match": "Saudi Arabia vs Uruguay",
+    "actual": "D",
+    "score": "1-1",
+    "pred": "A",
+    "p_h": 0.0941,
+    "p_d": 0.2769,
+    "p_a": 0.629,
+    "correct": false
+  },
+  {
+    "match": "Iran vs New Zealand",
+    "actual": "D",
+    "score": "2-2",
+    "pred": "H",
+    "p_h": 0.5513,
+    "p_d": 0.264,
+    "p_a": 0.1847,
+    "correct": false
+  },
+  {
+    "match": "France vs Senegal",
+    "actual": "H",
+    "score": "3-1",
+    "pred": "H",
+    "p_h": 0.6568,
+    "p_d": 0.2391,
+    "p_a": 0.1041,
+    "correct": true
+  },
+  {
+    "match": "Iraq vs Norway",
+    "actual": "A",
+    "score": "1-4",
+    "pred": "A",
+    "p_h": 0.1681,
+    "p_d": 0.2688,
+    "p_a": 0.5631,
+    "correct": true
+  },
+  {
+    "match": "Argentina vs Algeria",
+    "actual": "H",
+    "score": "3-0",
+    "pred": "H",
+    "p_h": 0.719,
+    "p_d": 0.2283,
+    "p_a": 0.0527,
+    "correct": true
+  },
+  {
+    "match": "Austria vs Jordan",
+    "actual": "H",
+    "score": "3-1",
+    "pred": "H",
+    "p_h": 0.6281,
+    "p_d": 0.2602,
+    "p_a": 0.1117,
+    "correct": true
+  },
+  {
+    "match": "Portugal vs Congo DR",
+    "actual": "D",
+    "score": "1-1",
+    "pred": "H",
+    "p_h": 0.7035,
+    "p_d": 0.2262,
+    "p_a": 0.0703,
+    "correct": false
+  },
+  {
+    "match": "England vs Croatia",
+    "actual": "H",
+    "score": "4-2",
+    "pred": "H",
+    "p_h": 0.5717,
+    "p_d": 0.2422,
+    "p_a": 0.1861,
+    "correct": true
+  },
+  {
+    "match": "Ghana vs Panama",
+    "actual": "H",
+    "score": "1-0",
+    "pred": "H",
+    "p_h": 0.485,
+    "p_d": 0.2855,
+    "p_a": 0.2295,
+    "correct": true
+  },
+  {
+    "match": "Uzbekistan vs Colombia",
+    "actual": "A",
+    "score": "1-3",
+    "pred": "A",
+    "p_h": 0.0748,
+    "p_d": 0.2663,
+    "p_a": 0.6589,
+    "correct": true
+  },
+  {
+    "match": "Czechia vs South Africa",
+    "actual": "D",
+    "score": "1-1",
+    "pred": "A",
+    "p_h": 0.2854,
+    "p_d": 0.2876,
+    "p_a": 0.427,
+    "correct": false
+  },
+  {
+    "match": "Switzerland vs Bosnia-Herzegovina",
+    "actual": "H",
+    "score": "4-1",
+    "pred": "H",
+    "p_h": 0.5946,
+    "p_d": 0.2472,
+    "p_a": 0.1582,
+    "correct": true
+  },
+  {
+    "match": "Canada vs Qatar",
+    "actual": "H",
+    "score": "6-0",
+    "pred": "H",
+    "p_h": 0.5329,
+    "p_d": 0.2886,
+    "p_a": 0.1785,
+    "correct": true
+  },
+  {
+    "match": "Mexico vs South Korea",
+    "actual": "H",
+    "score": "1-0",
+    "pred": "H",
+    "p_h": 0.5603,
+    "p_d": 0.2625,
+    "p_a": 0.1772,
+    "correct": true
+  },
+  {
+    "match": "United States vs Australia",
+    "actual": "H",
+    "score": "2-0",
+    "pred": "H",
+    "p_h": 0.4806,
+    "p_d": 0.2643,
+    "p_a": 0.2551,
+    "correct": true
+  },
+  {
+    "match": "Scotland vs Morocco",
+    "actual": "A",
+    "score": "0-1",
+    "pred": "A",
+    "p_h": 0.357,
+    "p_d": 0.286,
+    "p_a": 0.357,
+    "correct": true
+  },
+  {
+    "match": "Brazil vs Haiti",
+    "actual": "H",
+    "score": "3-0",
+    "pred": "H",
+    "p_h": 0.7204,
+    "p_d": 0.2337,
+    "p_a": 0.046,
+    "correct": true
+  },
+  {
+    "match": "Türkiye vs Paraguay",
+    "actual": "A",
+    "score": "0-1",
+    "pred": "A",
+    "p_h": 0.3093,
+    "p_d": 0.2783,
+    "p_a": 0.4124,
+    "correct": true
+  },
+  {
+    "match": "Netherlands vs Sweden",
+    "actual": "H",
+    "score": "5-1",
+    "pred": "H",
+    "p_h": 0.6512,
+    "p_d": 0.2395,
+    "p_a": 0.1093,
+    "correct": true
+  },
+  {
+    "match": "Germany vs Ivory Coast",
+    "actual": "H",
+    "score": "2-1",
+    "pred": "H",
+    "p_h": 0.6138,
+    "p_d": 0.2488,
+    "p_a": 0.1374,
+    "correct": true
+  },
+  {
+    "match": "Ecuador vs Curaçao",
+    "actual": "D",
+    "score": "0-0",
+    "pred": "H",
+    "p_h": 0.6208,
+    "p_d": 0.2622,
+    "p_a": 0.1169,
+    "correct": false
+  },
+  {
+    "match": "Tunisia vs Japan",
+    "actual": "A",
+    "score": "0-4",
+    "pred": "A",
+    "p_h": 0.2208,
+    "p_d": 0.2848,
+    "p_a": 0.4944,
+    "correct": true
+  },
+  {
+    "match": "Spain vs Saudi Arabia",
+    "actual": "H",
+    "score": "4-0",
+    "pred": "H",
+    "p_h": 0.7552,
+    "p_d": 0.2252,
+    "p_a": 0.0196,
+    "correct": true
+  },
+  {
+    "match": "Belgium vs Iran",
+    "actual": "D",
+    "score": "0-0",
+    "pred": "H",
+    "p_h": 0.5853,
+    "p_d": 0.2449,
+    "p_a": 0.1698,
+    "correct": false
+  },
+  {
+    "match": "Uruguay vs Cape Verde",
+    "actual": "D",
+    "score": "2-2",
+    "pred": "H",
+    "p_h": 0.6438,
+    "p_d": 0.2599,
+    "p_a": 0.0963,
+    "correct": false
+  },
+  {
+    "match": "New Zealand vs Egypt",
+    "actual": "A",
+    "score": "1-3",
+    "pred": "A",
+    "p_h": 0.3151,
+    "p_d": 0.2882,
+    "p_a": 0.3967,
+    "correct": true
+  },
+  {
+    "match": "Argentina vs Austria",
+    "actual": "H",
+    "score": "2-0",
+    "pred": "H",
+    "p_h": 0.6715,
+    "p_d": 0.2183,
+    "p_a": 0.1102,
+    "correct": true
+  },
+  {
+    "match": "France vs Iraq",
+    "actual": "H",
+    "score": "3-0",
+    "pred": "H",
+    "p_h": 0.7265,
+    "p_d": 0.2326,
+    "p_a": 0.0409,
+    "correct": true
+  },
+  {
+    "match": "Norway vs Senegal",
+    "actual": "H",
+    "score": "3-2",
+    "pred": "H",
+    "p_h": 0.4994,
+    "p_d": 0.2642,
+    "p_a": 0.2363,
+    "correct": true
+  },
+  {
+    "match": "Jordan vs Algeria",
+    "actual": "A",
+    "score": "1-2",
+    "pred": "A",
+    "p_h": 0.2878,
+    "p_d": 0.3057,
+    "p_a": 0.4065,
+    "correct": true
+  },
+  {
+    "match": "Portugal vs Uzbekistan",
+    "actual": "H",
+    "score": "5-0",
+    "pred": "H",
+    "p_h": 0.6919,
+    "p_d": 0.2498,
+    "p_a": 0.0582,
+    "correct": true
+  },
+  {
+    "match": "England vs Ghana",
+    "actual": "D",
+    "score": "0-0",
+    "pred": "H",
+    "p_h": 0.6967,
+    "p_d": 0.2356,
+    "p_a": 0.0677,
+    "correct": false
+  },
+  {
+    "match": "Panama vs Croatia",
+    "actual": "A",
+    "score": "0-1",
+    "pred": "A",
+    "p_h": 0.1462,
+    "p_d": 0.2716,
+    "p_a": 0.5822,
+    "correct": true
+  },
+  {
+    "match": "Colombia vs Congo DR",
+    "actual": "H",
+    "score": "1-0",
+    "pred": "H",
+    "p_h": 0.7155,
+    "p_d": 0.2302,
+    "p_a": 0.0543,
+    "correct": true
+  },
+  {
+    "match": "Bosnia-Herzegovina vs Qatar",
+    "actual": "H",
+    "score": "3-1",
+    "pred": "H",
+    "p_h": 0.5172,
+    "p_d": 0.2769,
+    "p_a": 0.2059,
+    "correct": true
+  },
+  {
+    "match": "Switzerland vs Canada",
+    "actual": "H",
+    "score": "2-1",
+    "pred": "H",
+    "p_h": 0.5599,
+    "p_d": 0.263,
+    "p_a": 0.1771,
+    "correct": true
+  },
+  {
+    "match": "Morocco vs Haiti",
+    "actual": "H",
+    "score": "4-2",
+    "pred": "H",
+    "p_h": 0.6374,
+    "p_d": 0.2673,
+    "p_a": 0.0954,
+    "correct": true
+  },
+  {
+    "match": "Scotland vs Brazil",
+    "actual": "A",
+    "score": "0-3",
+    "pred": "A",
+    "p_h": 0.2212,
+    "p_d": 0.2604,
+    "p_a": 0.5185,
+    "correct": true
+  },
+  {
+    "match": "Czechia vs Mexico",
+    "actual": "A",
+    "score": "0-3",
+    "pred": "A",
+    "p_h": 0.1361,
+    "p_d": 0.256,
+    "p_a": 0.6079,
+    "correct": true
+  },
+  {
+    "match": "South Africa vs South Korea",
+    "actual": "H",
+    "score": "1-0",
+    "pred": "H",
+    "p_h": 0.3611,
+    "p_d": 0.2979,
+    "p_a": 0.3409,
+    "correct": true
+  }
+]
